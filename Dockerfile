@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM golang:1.19-alpine AS build
 
 # Establecer directorio de trabajo
 WORKDIR /app
@@ -6,14 +6,12 @@ WORKDIR /app
 # Copiar archivos del repositorio (que Render ya clonó)
 COPY . .
 
-# Instalar dependencias
-RUN npm install
-
 # Compilar la aplicación
-RUN npm run build || echo "Build command may not be necessary, continuing..."
+RUN go mod download && \
+    go build -o github-mcp-server cmd/github-mcp-server/main.go
 
 # Exponer el puerto que utiliza la aplicación
 EXPOSE 8000
 
 # Comando para iniciar el servicio
-CMD ["node", "dist/index.js"]
+CMD ["./github-mcp-server"]
