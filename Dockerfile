@@ -7,19 +7,11 @@ WORKDIR /app
 COPY . .
 
 # Verificar la estructura de directorios
-RUN ls -la && \
-    mkdir -p cmd/github-mcp-server && \
-    ls -la cmd/
+RUN ls -la
 
-# Compilar la aplicación
+# Compilar la aplicación simplificada (usando main.go en la raíz)
 RUN go mod download && \
-    if [ -f ./cmd/github-mcp-server/main.go ]; then \
-        go build -o github-mcp-server ./cmd/github-mcp-server/main.go; \
-    else \
-        echo "Error: main.go no encontrado, verificando estructura de directorios:"; \
-        find . -type f -name "*.go" | grep -i main; \
-        exit 1; \
-    fi
+    go build -o github-mcp-server main.go
 
 # Exponer el puerto que utiliza la aplicación
 EXPOSE 8000
