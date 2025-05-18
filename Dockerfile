@@ -3,10 +3,8 @@ FROM node:16-alpine
 # Establecer directorio de trabajo
 WORKDIR /app
 
-# Clonar el repositorio
-RUN apk add --no-cache git && \
-    git clone https://github.com/NeuroForge1/genia-mcp-server-github.git . && \
-    apk del git
+# Copiar archivos del repositorio (que Render ya clonó)
+COPY . .
 
 # Instalar dependencias
 RUN npm install
