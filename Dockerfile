@@ -8,7 +8,7 @@ COPY . .
 
 # Compilar la aplicación
 RUN go mod download && \
-    go build -o github-mcp-server cmd/github-mcp-server/main.go
+    go build -o github-mcp-server ./cmd/github-mcp-server/main.go
 
 # Exponer el puerto que utiliza la aplicación
 EXPOSE 8000
